@@ -1,14 +1,20 @@
 #include <stdio.h>
-#include "bubble.c"
-#include "selection.c"
-#include "insertion.c"
+#include <stdlib.h>
+#include <string.h>
 
-int main() {
-	int vet[10] = {10,9,8,7,6,5,4,3,2,1};
-	int size = 10;
-	insertion_sort(vet, size);
+#include "array.c"
+#include "get_opt.c"
 
-	for(int i = 0; i < size; i++) {
+int main(int argc, char *argv[]) {
+	
+    int *method, *size, *array_type;
+    get_opt(argv, method, size, array_type);
+
+    printf("%d %d %d\n", *method, *size, *array_type);
+
+	int *vet = generate_array(*size, DESCENDING_ORDER);
+
+	for(int i = 0; i < *size; i++) {
 		printf("%d ", vet[i]);
 	}
 	return 0;
