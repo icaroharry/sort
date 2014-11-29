@@ -1,13 +1,20 @@
 #include "util.c"
 
-void selection_sort(int vet[], int size) {
-	int minor, aux;
-	for(int i = 0; i < size; i++) {
-		minor = i;
-		for(int j = i + 1; j < size; j++) {
-			if(compare(&vet[j], &vet[minor]) == 0) 
-				minor = j;
+void selection_sort(int *vet, int tam){ 
+	int i, j, min, aux;
+  	for (i = 0; i < (tam-1); i++){
+		min = i;
+		for (j = (i+1); j < tam; j++) {
+			number_of_comparisons++;
+			if(vet[j] < vet[min]){
+		    	min = j;
+		  	}
 		}
-		swap(&vet[i], &vet[minor]);
-	}
+		if (i != min){
+			aux = vet[i];
+		  	vet[i] = vet[min];
+		  	vet[min] = aux;
+		  	number_of_swaps++;
+		}
+  	}
 }

@@ -14,7 +14,8 @@
  */
 void random_array(int *array, int size) {
     srand(time(NULL));
-    for(int i = 0; i < size; i++) {
+    int i;
+    for(i = 0; i < size; i++) {
         array[i] = rand() % size;
     }
 }
@@ -25,7 +26,8 @@ void random_array(int *array, int size) {
  * @param int  size  Number of elements
  */
 void ascending_array(int *array, int size) {
-    for(int i = 1; i <= size; i++) {
+    int i;
+    for(i = 1; i <= size; i++) {
         array[i] = i;
     }
 }
@@ -36,7 +38,8 @@ void ascending_array(int *array, int size) {
  * @param int  size  Number of elements
  */
 void descending_array(int *array, int size) {
-    for(int i = 0, j = size; i < size; i++, j--) {
+    int i, j;
+    for(i = 0, j = size; i < size; i++, j--) {
         array[i] = j;
     }
 }
