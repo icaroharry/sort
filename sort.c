@@ -1,5 +1,5 @@
 /*
-     * =====================================================================================
+ * =====================================================================================
  *
  *       Filename:  swap.c
  *
@@ -17,6 +17,8 @@
  */
 
 #include"sort.h"
+#include<string.h>
+#include<stdlib.h>
 
 clock_t start, end;
 double elapsed_time;
@@ -170,6 +172,38 @@ void heap_sort(int vet[], int n){
    }
 }
 
+void top_down_merge(int* a,int begin,int end,int* b){
+    int middle = (end+begin)/2;
+    int i0 = begin;
+    int i1 = middle;
+    int index;
+
+    if(end - begin < 2){
+        return;
+    }
+
+    top_down_merge(a, begin, middle, b);
+    top_down_merge(a, middle, end, b);
+
+    for (index = begin; index < end; index++) {
+        if (i0 < middle && (i1 >= end || a[i0] <= a[i1])){
+            b[index] = a[i0];
+            i0 = i0 + 1;
+        }else{
+            b[index] = a[i1];
+            i1 = i1 + 1;
+        }
+    }
+
+    memcpy((a+begin),(b+begin),sizeof(int)*(end-begin));
+}
+
+void merge_sort(int* a,int n){
+    int* b = (int*)malloc(sizeof(int)*n);
+    top_down_merge(a, 0, n, b);
+    free(b);
+}
+
 int* sort_array(int *vet, int size, int method){
 
     switch(method){
@@ -202,6 +236,11 @@ int* sort_array(int *vet, int size, int method){
                 heap_sort(vet, size);
             end = clock();
         break;
+
+        case MERGE:
+            start = clock();
+                merge_sort(vet, size);
+            end = clock();
     }
     elapsed_time = (((double)(end-start))/CLOCKS_PER_SEC);
     return vet;

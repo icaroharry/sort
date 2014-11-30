@@ -22,6 +22,7 @@
 #include "array.h"
 #include "sort.h"
 
+int check_opt(int argc);
 int get_sort_method(char method[]);
 int get_array_size(char method[]);
 int get_array_type(char type[]);

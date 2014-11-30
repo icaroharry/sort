@@ -6,6 +6,10 @@
 
 static const char *optString = "a:n:s:P";
 
+int check_opt(int argc){
+    return argc > 6;
+}
+
 int get_sort_method(char method[]) {
     int selected_method;
     //printf("%d\n", selected_method);
@@ -19,6 +23,8 @@ int get_sort_method(char method[]) {
         selected_method = QUICK;
     else if(strcmp(method, "heap") == 0)
         selected_method = HEAP;
+    else if(strcmp(method, "merge") == 0)
+        selected_method = MERGE;
     else
         selected_method = UNDEFINED;
     return selected_method;
@@ -95,10 +101,12 @@ char* get_method_name(int method){
         case HEAP:
             name = "Heap";
             break;
-        case UNDEFINED:
-            name = " - ";
+        case MERGE:
+            name = "Merge";
             break;
+        case UNDEFINED:
         default:
+            name = " - ";
             break;
     }
     return name;
@@ -120,9 +128,8 @@ char* get_array_type_name(int type){
             name = "Quase ordenado";
             break;
         case UNDEFINED:
-            name = " - ";
-            break;
         default:
+            name = " - ";
             break;
     }
     return name;

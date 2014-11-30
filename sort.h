@@ -25,6 +25,7 @@
 #define SHELL      2
 #define QUICK      3
 #define HEAP       4
+#define MERGE      5
 #define UNDEFINED -1
 
 extern int numberOfComparisons;
@@ -37,6 +38,7 @@ void insertion_sort(int *array, int size);
 void shell_sort(int *vet, int size);
 void quick_sort(int vet[], int left, int right);
 void heap_sort(int vet[], int n);
+void merge_sort(int* vet, int n);
 
 int* sort_array(int *vet, int size, int method);
 double get_elapsed_time();

@@ -7,6 +7,14 @@
 
 int main(int argc, char **argv) {
     int i, method, size, array_type, print_vector = 0;
+
+    if(!check_opt(argc)){
+        fprintf(stderr,"Not enough parameters\n");
+        fprintf(stderr,"Expected: -a SORTTYPE -n ARRAYSIZE -s ARRAYSTATE [-p]\n");
+        fprintf(stderr,"Please read the doc.");
+        return 1;
+    }
+
     get_opt(argc, argv, &method, &size, &array_type, &print_vector);
 
     // Create the vector with the specified size and situation
