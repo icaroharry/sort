@@ -68,7 +68,6 @@ void almost_ordered_array(int *array, int size) {
  */
 int* generate_array(int size, int organization) {
     int* array;
-    printf("SIZE:: %d\n",size);
     array = (int*)malloc(size*sizeof(int));
 
     if(array){

@@ -20,3 +20,4 @@
 #define INSERTION_SORT  32
 
 void gpu_qsort(int *data, int nitems);
+void gpumerge_sort(int* a,int n);

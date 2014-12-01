@@ -239,6 +239,11 @@ int* sort_array(int *vet, int size, int method){
             gpu_qsort(vet,size);
             end = clock();
         break;
+
+        case GPUMERGE:
+            start = clock();
+            gpumerge_sort(vet,size);
+            end = clock();
     }
     elapsed_time = (((double)(end-start))/CLOCKS_PER_SEC);
     return vet;

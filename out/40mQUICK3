@@ -1,0 +1,10 @@
+-- Analysis --
+
+Sorting algorithm: Quick
+Array type: Aleatorio
+Array size: 40000000
+Number of comparisons: 841217256
+Number of swaps: 248415500
+Time elapsed: 10.908791 s
+
+
