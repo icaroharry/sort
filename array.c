@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <stdio.h>
 /**
  * Function that fills an array with random integers
  * @param int* array Reference to the array that will be filled
@@ -68,21 +68,24 @@ void almost_ordered_array(int *array, int size) {
  */
 int* generate_array(int size, int organization) {
     int* array;
+    printf("SIZE:: %d\n",size);
     array = (int*)malloc(size*sizeof(int));
-    switch(organization) {
-        case RANDOM_ORDER:
+
+    if(array){
+        switch(organization) {
+            case RANDOM_ORDER:
             random_array(array, size);
             break;
-        case ASCENDING_ORDER:
+            case ASCENDING_ORDER:
             ascending_array(array, size);
             break;
-        case DESCENDING_ORDER:
+            case DESCENDING_ORDER:
             descending_array(array, size);
             break;
-        case ALMOST_ORDERED:
+            case ALMOST_ORDERED:
             almost_ordered_array(array, size);
             break;
+        }
     }
-
     return array;
 }

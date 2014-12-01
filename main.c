@@ -19,6 +19,12 @@ int main(int argc, char **argv) {
 
     // Create the vector with the specified size and situation
     int *vet = generate_array(size, array_type);
+
+    if(!vet){
+        fprintf(stderr,"Memory allocation failed.\n");
+        return 1;
+    }
+
     int *vet_aux = (int*)malloc(sizeof(int)*size);
     // Create a copy of the vector to print it berfore and after it is sorted in case this option is enabled
     for(i=0; i<size; i++){

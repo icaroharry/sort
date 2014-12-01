@@ -17,6 +17,7 @@
  */
 
 #include"sort.h"
+#include"cuda_sort.h"
 #include<string.h>
 #include<stdlib.h>
 
@@ -82,32 +83,18 @@ void shell_sort(int *vet, int size) {
 }
 
 void quick_sort(int vet[], int left, int right) {
-    int i, j, x, y, middle;
+    int i, j, pivot, y;
     i = left;
     j = right;
 
-    middle = vet[(i+j) / 2];
-
-    /**
-     * To avoid the worst case, we've to select the middle element
-     * between 3 random elements
-     */
-    if((middle > i && middle < j)||(middle > j && middle < i)){
-        x = middle;
-    } else if((i > middle && i < j) || (i > j && i < middle)){
-        x = i;
-    } else if((j > middle && j < i) || (j > i && j < middle)){
-        x = j;
-    } else {
-        x = middle;
-    }
+    pivot = vet[(i+j) / 2];
 
     while(i <= j) {
-        while(vet[i] < x && i < right){
+        while(vet[i] < pivot && i < right){
             i++;
             numberOfComparisons++;
         }
-        while(vet[j] > x && j > left){
+        while(vet[j] > pivot && j > left){
             j--;
             numberOfComparisons++;
         }
@@ -213,38 +200,45 @@ int* sort_array(int *vet, int size, int method){
     switch(method){
         case SELECTION:
             start = clock();
-                selection_sort(vet, size);
+            selection_sort(vet, size);
             end = clock();
         break;
 
         case INSERTION:
             start = clock();
-                insertion_sort(vet, size);
+            insertion_sort(vet, size);
             end = clock();
         break;
 
         case SHELL:
             start = clock();
-                shell_sort(vet, size);
+            shell_sort(vet, size);
             end = clock();
         break;
 
         case QUICK:
             start = clock();
-                quick_sort(vet, 0, size);
+            quick_sort(vet, 0, size);
             end = clock();
         break;
 
         case HEAP:
             start = clock();
-                heap_sort(vet, size);
+            heap_sort(vet, size);
             end = clock();
         break;
 
         case MERGE:
             start = clock();
-                merge_sort(vet, size);
+            merge_sort(vet, size);
             end = clock();
+        break;
+
+        case GPUQUICK:
+            start = clock();
+            gpu_qsort(vet,size);
+            end = clock();
+        break;
     }
     elapsed_time = (((double)(end-start))/CLOCKS_PER_SEC);
     return vet;

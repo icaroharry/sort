@@ -25,6 +25,8 @@ int get_sort_method(char method[]) {
         selected_method = HEAP;
     else if(strcmp(method, "merge") == 0)
         selected_method = MERGE;
+    else if(strcmp(method, "gpuquick") == 0)
+        selected_method = GPUQUICK;
     else
         selected_method = UNDEFINED;
     return selected_method;
@@ -32,7 +34,7 @@ int get_sort_method(char method[]) {
 
 int get_array_size(char method[]) {
     int size = atoi(method);
-    if(size < 0 || size > 1000000)
+    if(size < 0)
         size = UNDEFINED;
     return size;
 }
@@ -104,6 +106,10 @@ char* get_method_name(int method){
         case MERGE:
             name = "Merge";
             break;
+        case GPUQUICK:
+            name = "CUDA Quick Sort";
+            break;
+
         case UNDEFINED:
         default:
             name = " - ";
