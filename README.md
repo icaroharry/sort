@@ -38,7 +38,7 @@ gcc pong.o -o pong $(pkg-config --libs allegro-5.0 allegro_image-5.0 allegro_fon
 
 To run the program, type:
 
-``` bash
+```c
 ./a.out -a $algorithm -n $number_of_elements -s $state [-P]
 ```
 
