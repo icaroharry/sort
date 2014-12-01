@@ -41,7 +41,18 @@ To run the program, type:
 ```c
 ./a.out -a $algorithm -n $number_of_elements -s $state [-P]
 ```
+###Parameters
 
+| Param         | Value         | 
+| ------------- |:-------------:| 
+| -a            | selection     |
+|               | insertion     |
+|               | shell         | 
+|               | quick         | 
+|               | heap          | 
+|               | merge         | 
+|               | gpuquick      | 
+|               | gpumerge      |    
 
 
    
