@@ -177,8 +177,9 @@ void top_down_merge(int* a,int begin,int end,int* b){
     int i0 = begin;
     int i1 = middle;
     int index;
+    int n = end-begin;
 
-    if(end - begin < 2){
+    if(n < 2){
         return;
     }
 
@@ -188,14 +189,17 @@ void top_down_merge(int* a,int begin,int end,int* b){
     for (index = begin; index < end; index++) {
         if (i0 < middle && (i1 >= end || a[i0] <= a[i1])){
             b[index] = a[i0];
-            i0 = i0 + 1;
+            i0++;
         }else{
             b[index] = a[i1];
-            i1 = i1 + 1;
+            i1++;
         }
+        numberOfComparisons++;
+        numberOfSwaps++;
     }
 
-    memcpy((a+begin),(b+begin),sizeof(int)*(end-begin));
+    memcpy((a+begin),(b+begin),sizeof(int)*(n));
+    numberOfSwaps+= n;
 }
 
 void merge_sort(int* a,int n){
