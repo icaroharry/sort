@@ -21,10 +21,11 @@ gcc pong.o -o pong $(pkg-config --libs allegro-5.0 allegro_image-5.0 allegro_fon
 
 ## Instructions
 > Our program generates and fills arrays in four different ways: 
-  > 1. arrays with totally random elements
+  > 
+  1. arrays with totally random elements
   2. arrays already ordered 
-  3.arrays ordered in descending order 
-  4. arrays 90%   ordered.
+  3. arrays ordered in descending order 
+  4. arrays 90% ordered.
 	
   > **Comandos**
   - Controle com as setas para cima e para baixo (UP and DOWN);
