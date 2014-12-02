@@ -53,8 +53,16 @@ To run the program, type:
 |               | merge         | 
 |               | gpuquick      | 
 |               | gpumerge      |    
-
-
+| ------------- |:-------------:| 
+| -n            | int > 0       |
+| ------------- |:-------------:| 
+| -s            | random        |
+|               | ascending     |
+|               | descending    | 
+|               | almost        | 
+| ------------- |:-------------:| 
+| -P            |
+ 
    
 
  
