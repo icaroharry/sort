@@ -43,11 +43,16 @@ To run the program, type:
 ```
 ###Parameters
 
+> 1. -a sorting algorithm 
+2. -n number of elements
+3. -s array state
+4. -P print results
+
 | Param         | Value         | 
 | ------------- |:-------------:| 
 | -a            | selection     |
-                 insertion      |
-|                  shell         | 
+|               |  insertion    |
+|               |   shell       | 
 |               | quick         | 
 |               | heap          | 
 |               | merge         | 
