@@ -24,15 +24,7 @@ Repository of sorting algorithms in C and CUDA.
   
 ## Compiling
 
-``` bash
-gcc -c jogador.c -o jogador.o
-
-gcc -c pong.c
-
-gcc pong.o -o pong $(pkg-config --libs allegro-5.0 allegro_image-5.0 allegro_font-5.0 allegro_ttf-5.0 allegro_primitives-5.0) jogador.p
-
-./pong
-```
+Run the MAKEFILE
 
 ## Instructions
 
