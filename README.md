@@ -46,8 +46,8 @@ To run the program, type:
 | Param         | Value         | 
 | ------------- |:-------------:| 
 | -a            | selection     |
-                  insertion     
-                  shell          
+                 insertion      |
+|                  shell         | 
 |               | quick         | 
 |               | heap          | 
 |               | merge         | 
