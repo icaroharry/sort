@@ -47,7 +47,7 @@ To run the program, type:
 ```c
 ./a.out -a $algorithm -n $number_of_elements -s $state [-P]
 ```
-###Parameters
+### Parameters
 
 > 1. -a sorting algorithm 
 2. -n number of elements
@@ -71,7 +71,7 @@ To run the program, type:
 |               | almost        | 
 | -P            |
 
-###Tested
+### Tested
 
 CUDA code tested on a GeForce GT 740M
 
