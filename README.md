@@ -76,9 +76,10 @@ To run the program, type:
 
 CUDA code tested on a GeForce GT 740M
 
-  | "GeForce GT 740M"                           | Features                        |
-  | ------------------------------------------- | ------------------------------- |
+  | GeForce GT 740M                             | Features                        |
+  | ------------------------------------------- |:-------------------------------:|
   | CUDA Driver Version / Runtime Version       | 6.5 / 6.0                       |
   | CUDA Capability Major/Minor version number: | 3.5                             |
   | Total amount of global memory:              | 2048 MBytes (2147352576 bytes)  |
   | ( 2) Multiprocessors, (192) CUDA Cores/MP:  | 384 CUDA Cores                  |
+
