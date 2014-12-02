@@ -37,8 +37,10 @@ int main(int argc, char **argv) {
     printf("Sorting algorithm: %s\n", get_method_name(method));
     printf("Array type: %s\n", get_array_type_name(array_type));
     printf("Array size: %d\n", size);
-    printf("Number of comparisons: %d\n", get_comparisons());
-    printf("Number of swaps: %d\n", get_swaps());
+    if(method < GPUQUICK ){
+        printf("Number of comparisons: %d\n", get_comparisons());
+        printf("Number of swaps: %d\n", get_swaps());
+    }
     printf("Time elapsed: %f s\n", get_elapsed_time());
     if(print_vector){
         printf("Original: ");
