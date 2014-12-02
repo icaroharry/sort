@@ -22,6 +22,21 @@ Repository of sorting algorithms in C and CUDA.
   7. CUDA Quick sort
   8. CUDA Merge sort
   
+
+## Requirements
+
+NVIDIA CUDA Toolkit 6.0
+Compiled with NVCC v6.0.1, GCC and G++
+
+Follow these instructions to set up your environment:
+[prosciens’s tutorial to set up CUDA 6 compiler environment on Debian testing/sid](http://prosciens.com/prosciens/how-to-install-nvidia-cuda-6-and-compile-all-the-samples-in-debian-testing-x86_64/
+ "prosciens’s instructions")
+
+Our CUDA sorting code requires devices with CUDA compute capability 3.5 or higher, in order to use
+the Dinamic Parallelism technology, read more about it here:
+
+[NVIDIA blog describing Dinamic Parallelism in Kepler GPUs](http://blogs.nvidia.com/blog/2012/09/12/how-tesla-k20-speeds-up-quicksort-a-familiar-comp-sci-code/ "NVIDIA blog")
+
 ## Compiling
 
 Run the MAKEFILE
@@ -56,11 +71,14 @@ To run the program, type:
 |               | descending    | 
 |               | almost        | 
 | -P            |
- 
-   
 
- 
+###Tested
 
+CUDA code tested on a GeForce GT 740M
 
-
-
+  | "GeForce GT 740M"                           | Features                        |
+  | ------------------------------------------- | ------------------------------- |
+  | CUDA Driver Version / Runtime Version       | 6.5 / 6.0                       |
+  | CUDA Capability Major/Minor version number: | 3.5                             |
+  | Total amount of global memory:              | 2048 MBytes (2147352576 bytes)  |
+  | ( 2) Multiprocessors, (192) CUDA Cores/MP:  | 384 CUDA Cores                  |
