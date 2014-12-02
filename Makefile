@@ -1,4 +1,12 @@
 ################################################################################
+# Modified by Eugenio Pacceli in order to compile and link CUDA code with gcc's
+# generated objects.
+#
+# You must have CUDA TOOLKIT 6, nvcc, gcc or g++ in order to run this Makefile.
+# Tested on Debian testing/sid 64 bits, using the instructions in this article:
+#
+# http://prosciens.com/prosciens/how-to-install-nvidia-cuda-6-and-compile-all-the-samples-in-debian-testing-x86_64/
+################################################################################
 #
 # Copyright 1993-2013 NVIDIA Corporation.  All rights reserved.
 #
@@ -31,8 +39,7 @@
 #
 # Makefile project only supported on Mac OS X and Linux Platforms)
 #
-################################################################################
-
+###############################################################################
 # Location of the CUDA Toolkit
 CUDA_PATH ?= "/usr/local/cuda-6.0"
 
@@ -148,7 +155,8 @@ ALL_CCFLAGS += -dc
 LIBRARIES += -lcudadevrt
 
 ################################################################################
-
+# This part modified by Eugenio Pacceli Reis da Fonseca
+# DCC/UFMG
 # Target rules
 all: app
 
@@ -176,5 +184,3 @@ run: build
 clean:
 	rm -f *.o
 	rm -f app
-
-clobber: clean

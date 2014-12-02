@@ -28,10 +28,9 @@ extern "C" {
     #include "cuda_sort.h"
 }
 
-////////////////////////////////////////////////////////////////////////////////
+// NVIDIA's
 // Selection sort used when depth gets too big or the number of elements drops
 // below a threshold.
-////////////////////////////////////////////////////////////////////////////////
 __device__ void selection_sort( int *data, int left, int right )
 {
   for( int i = left ; i <= right ; ++i ){
@@ -121,9 +120,10 @@ __global__ void cdp_simple_quicksort(int *data, int left, int right, int depth )
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Call the quicksort kernel from the host.
-////////////////////////////////////////////////////////////////////////////////
+
+// gcc compiled code will call this function to access CUDA Quick Sort.
+// This calls the kernel, which is recursive. Waits for it, then copies it's
+// output back to CPU readable memory.
 extern "C"
 void gpu_qsort(int *data, int n){
     int* gpuData;
@@ -153,6 +153,8 @@ void gpu_qsort(int *data, int n){
     cudaDeviceReset();
 }
 
+// Our MergeSort implementation. Really simple, based on the normal top down
+// implementation. Not inplace.
 __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int depth){
     int middle = (end+begin)/2;
     int i0 = begin;
@@ -160,24 +162,28 @@ __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int d
     int index;
     int n = end-begin;
 
+    // Used to implement recursions using CUDA parallelism.
     cudaStream_t s,s1;
 
     if(n < 2){
         return;
     }
 
-    // Launch a new block to sort the left part.
+    // Launches a new block to sort the left part.
     cudaStreamCreateWithFlags(&s,cudaStreamNonBlocking);
     simple_mergesort<<< 1, 1, 0, s >>>(data,dataAux, begin, middle, depth+1);
     cudaStreamDestroy(s);
 
-    // Launch a new block to sort the right part.
+    // Launches a new block to sort the right part.
     cudaStreamCreateWithFlags(&s1,cudaStreamNonBlocking);
     simple_mergesort<<< 1, 1, 0, s1 >>>(data,dataAux, middle, end, depth+1);
     cudaStreamDestroy(s1);
 
+    // Waits for children's work.
     cudaDeviceSynchronize();
 
+    // Merges children's generated partition.
+    // Does the merging using the auxiliary memory.
     for (index = begin; index < end; index++) {
         if (i0 < middle && (i1 >= end || data[i0] <= data[i1])){
             dataAux[index] = data[i0];
@@ -188,11 +194,20 @@ __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int d
         }
     }
 
+    // Copies from the auxiliary memory to the main memory.
+    // Note that each thread operates a different partition,
+    // and the auxiliary memory has exact the same size of the main
+    // memory, so the threads never write or read on the same
+    // memory position concurrently, since one must wait it's children
+    // to merge their partitions.
     for(index = begin; index < end; index++){
         data[index] = dataAux[index];
     }
 }
 
+// gcc compiled code will call this function to access CUDA Merge Sort.
+// This calls the kernel, which is recursive. Waits for it, then copies it's
+// output back to CPU readable memory.
 extern "C"
 void gpumerge_sort(int* a,int n){
     int* gpuData;
