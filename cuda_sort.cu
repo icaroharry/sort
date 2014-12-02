@@ -1,16 +1,29 @@
 /*
-* Copyright 1993-2014 NVIDIA Corporation.  All rights reserved.
+* 
+* Nvidia's Simple Quick Sort Sample was used as a basis and modified to meet our
+* CPU algorithm. Check CUDA TOOLKIT 6.0 SAMPLES.
 *
+* As requested by NVIDIA:
+* Copyright 1993-2014 NVIDIA Corporation.  All rights reserved.
+* =============================================================================
 * Please refer to the NVIDIA end user license agreement (EULA) associated
 * with this source code for terms and conditions that govern your use of
 * this software. Any use, reproduction, disclosure, or distribution of
 * this software and related documentation outside the terms of the EULA
 * is strictly prohibited.
+* =============================================================================
+* Merge sort written by us, based on a top down implementation of merge sort
 *
+* Eugenio Pacceli Reis da Fonseca
+* Ícaro Pinto Coelho Harry
+* DCC/UFMG 2014
+* Compiler:: NVCC v6.0.1
+* Debian testing/sid 64 bits
 */
+
 #include <helper_cuda.h>
 #include <helper_string.h>
-#include <stdio.h>
+
 extern "C" {
     #include "cuda_sort.h"
 }
@@ -149,12 +162,6 @@ __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int d
 
     cudaStream_t s,s1;
 
-    //If we're too deep or there are few elements left, we use an insertion sort...
-    if( depth >= MAX_DEPTH || end-begin <= INSERTION_SORT ){
-        selection_sort( data, begin, end );
-        return;
-    }
-
     if(n < 2){
         return;
     }
@@ -165,9 +172,11 @@ __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int d
     cudaStreamDestroy(s);
 
     // Launch a new block to sort the right part.
-    cudaStreamCreateWithFlags(&s1,cudaDeviceScheduleBlockingSync);
+    cudaStreamCreateWithFlags(&s1,cudaStreamNonBlocking);
     simple_mergesort<<< 1, 1, 0, s1 >>>(data,dataAux, middle, end, depth+1);
     cudaStreamDestroy(s1);
+
+    cudaDeviceSynchronize();
 
     for (index = begin; index < end; index++) {
         if (i0 < middle && (i1 >= end || data[i0] <= data[i1])){
@@ -179,7 +188,7 @@ __global__ void simple_mergesort(int* data,int *dataAux,int begin,int end, int d
         }
     }
 
-    for(index = begin; index < end; index ++){
+    for(index = begin; index < end; index++){
         data[index] = dataAux[index];
     }
 }
@@ -189,12 +198,11 @@ void gpumerge_sort(int* a,int n){
     int* gpuData;
     int* gpuAuxData;
     int left = 0;
-    int right = n-1;
+    int right = n;
 
     // Prepare CDP for the max depth 'MAX_DEPTH'.
     cudaDeviceSetLimit(cudaLimitDevRuntimeSyncDepth, MAX_DEPTH);
 
-    printf("HERE");
     // Allocate GPU memory.
     cudaMalloc((void**)&gpuData,n*sizeof(int));
     cudaMalloc((void**)&gpuAuxData,n*sizeof(int));
