@@ -26,7 +26,7 @@ Repository of sorting algorithms in C and CUDA.
 ## Requirements
 
 > NVIDIA CUDA Toolkit 6.0
-Compiled with NVCC v6.0.1, GCC and G++
+> Compiled with NVCC v6.0.1, GCC and G++
 
 Follow these instructions to set up your environment:
 [prosciens’s tutorial to set up CUDA 6 compiler environment on Debian testing/sid](http://prosciens.com/prosciens/how-to-install-nvidia-cuda-6-and-compile-all-the-samples-in-debian-testing-x86_64/
