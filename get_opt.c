@@ -10,6 +10,12 @@ int check_opt(int argc){
     return argc > 6;
 }
 
+/**
+ * Function that receives a string which is a sorting method name
+ * and returns his constant value
+ * @param  char[] method 
+ * @return int
+ */
 int get_sort_method(char method[]) {
     int selected_method;
     //printf("%d\n", selected_method);
@@ -34,13 +40,25 @@ int get_sort_method(char method[]) {
     return selected_method;
 }
 
-int get_array_size(char method[]) {
-    int size = atoi(method);
-    if(size < 0)
+/**
+ * Function that receives a string containing 
+ * a number and convert it to an integer
+ * @param  char[] method
+ * @return int       
+ */
+int get_array_size(char sizeOpt[]) {
+    int size = atoi(sizeOpt);
+    if(size < 0) 
         size = UNDEFINED;
     return size;
 }
 
+/**
+ * Function that receives a string which is an array type
+ * and returns his constant
+ * @param  char[] type 
+ * @return int     
+ */
 int get_array_type(char type[]) {
     int selected_type;
     if(strcmp(type, "random") == 0)
@@ -56,6 +74,16 @@ int get_array_type(char type[]) {
     return selected_type;
 }
 
+/**
+ * Function that receives the args and calls the program with the 
+ * given parameters
+ * @param int       argc         
+ * @param char**    argv         
+ * @param int*      method       
+ * @param int*      size         
+ * @param int*      array_type   
+ * @param int*      print_vector 
+ */
 void get_opt(int argc, char **argv, int *method, int *size, int *array_type, int *print_vector) {
     int opt = 0;
     opt = getopt(argc, argv, optString);
@@ -87,14 +115,20 @@ void get_opt(int argc, char **argv, int *method, int *size, int *array_type, int
     }
 }
 
+/**
+ * Function that receives an integer which is the sorting method
+ * constant and returns a string containing his name
+ * @param   int   method
+ * @return  char*      
+ */
 char* get_method_name(int method){
     char *name;
     switch(method){
         case SELECTION:
-            name = "Selecao";
+            name = "Selection";
             break;
         case INSERTION:
-            name = "Insercao";
+            name = "Insertion";
             break;
         case SHELL:
             name = "Shell";
@@ -122,20 +156,26 @@ char* get_method_name(int method){
     return name;
 }
 
+/**
+ * Function that receives an integer which is the array type
+ * constant and returns a string containing his name
+ * @param   int   type
+ * @return  char*  
+ */
 char* get_array_type_name(int type){
     char *name;
     switch(type){
         case RANDOM_ORDER:
-            name = "Aleatorio";
+            name = "Random";
             break;
         case ASCENDING_ORDER:
-            name = "Ordenado";
+            name = "Ascending Order";
             break;
         case DESCENDING_ORDER:
-            name = "Inversamente ordenado";
+            name = "Descending Order";
             break;
         case ALMOST_ORDERED:
-            name = "Quase ordenado";
+           name = "Almost Sorted";
             break;
         case UNDEFINED:
         default:

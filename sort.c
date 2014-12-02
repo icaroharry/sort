@@ -26,24 +26,26 @@ double elapsed_time;
 int numberOfComparisons;
 int numberOfSwaps;
 
-void selection_sort(int *vet, int tam){
+
+void selection_sort(int *array, int size){
     int i, j, min, aux;
-      for (i = 0; i < (tam-1); i++){
+      for (i = 0; i < (size-1); i++){
         min = i;
-        for (j = (i+1); j < tam; j++) {
+        for (j = (i+1); j < size; j++) {
             numberOfComparisons++;
-            if(vet[j] < vet[min]){
+            if(array[j] < array[min]){
                 min = j;
               }
         }
         if (i != min){
-            aux = vet[i];
-              vet[i] = vet[min];
-              vet[min] = aux;
+            aux = array[i];
+              array[i] = array[min];
+              array[min] = aux;
               numberOfSwaps++;
         }
     }
 }
+
 
 void insertion_sort(int *array, int size) {
    int i, j, selected;
@@ -60,7 +62,7 @@ void insertion_sort(int *array, int size) {
    }
 }
 
-void shell_sort(int *vet, int size) {
+void shell_sort(int *array, int size) {
     int i , j , value;
     int gap = 1;
     while(gap < size) {
@@ -69,39 +71,39 @@ void shell_sort(int *vet, int size) {
     while (gap > 1) {
         gap /= 3;
         for(i = gap; i < size; i++) {
-            value = vet[i];
+            value = array[i];
             j = i - gap;
-            while (j >= 0 && value < vet[j]) {
-                vet [j + gap] = vet[j];
+            while (j >= 0 && value < array[j]) {
+                array [j + gap] = array[j];
                 j -= gap;
                 numberOfComparisons++;
                 numberOfSwaps++;
             }
-            vet [j + gap] = value;
+            array [j + gap] = value;
         }
     }
 }
 
-void quick_sort(int vet[], int left, int right) {
+void quick_sort(int array[], int left, int right) {
     int i, j, pivot, y;
     i = left;
     j = right;
 
-    pivot = vet[(i+j) / 2];
+    pivot = array[(i+j) / 2];
 
     while(i <= j) {
-        while(vet[i] < pivot && i < right){
+        while(array[i] < pivot && i < right){
             i++;
             numberOfComparisons++;
         }
-        while(vet[j] > pivot && j > left){
+        while(array[j] > pivot && j > left){
             j--;
             numberOfComparisons++;
         }
         if(i <= j){
-            y = vet[i];
-            vet[i] = vet[j];
-            vet[j] = y;
+            y = array[i];
+            array[i] = array[j];
+            array[j] = y;
             i++;
             j--;
             numberOfSwaps++;
@@ -109,54 +111,51 @@ void quick_sort(int vet[], int left, int right) {
     }
     /** Recursive call for the function to the left part of the array */
     if(j > left){
-        quick_sort(vet, left, j);
+        quick_sort(array, left, j);
     }
 
     /** Recursive call for the function to the right part of the array */
     if(i < right){
-        quick_sort(vet, i, right);
+        quick_sort(array, i, right);
     }
 }
 
-void heap_sort(int vet[], int n){
-  int i = n/2, pai, filho, t;
+void heap_sort(int array[], int n){
+    int i = n/2, father, child, t;
 
-   for (;;){
-      if (i > 0){
-          i--;
-          t = vet[i];
-      }
-      else{
-          n--;
-          if (n == 0)
-             return;
-          t = vet[n];
-          vet[n] = vet[0];
-      }
+    for(;;) {
+        if (i > 0) {
+            i--;
+            t = array[i];
+        }
+        else {
+            n--;
+            if (n == 0)
+               return;
+            t = array[n];
+            array[n] = array[0];
+        }
 
-      pai = i;
+        father = i;
 
-      //Primeiro será feita a comparação com o filho da esquerda.
-      filho = i*2;
+        //Compare with the left child
+        child = i*2;
 
-      while (filho < n){
-         //Se o filho da esquerda for menor do que o filho da direita,então será feita a troca do filho que será comparado.
-          if ((filho + 1 < n)  &&  (vet[filho + 1] > vet[filho])){
-            filho++;
-            numberOfComparisons++;
-          }
-          if (vet[filho] > t){
-             numberOfComparisons++;
-             vet[pai] = vet[filho];
-             pai = filho;
-             filho = pai*2 + 1;
-             numberOfSwaps++;
-          }
-          else
-             break;
-      }
-      vet[pai] = t;
-   }
+        while (child < n){
+            if ((child + 1 < n)  &&  (array[child + 1] > array[child])){
+              	child++;
+            	numberOfComparisons++;
+            }
+          	if (array[child] > t){
+             	numberOfComparisons++;
+             	array[father] = array[child];
+             	father = child;
+             	child = father*2 + 1;
+             	numberOfSwaps++;
+          	} else break;
+      	}
+     	 array[father] = t;
+   	}
 }
 
 void top_down_merge(int* a,int begin,int end,int* b){
@@ -195,58 +194,66 @@ void merge_sort(int* a,int n){
     free(b);
 }
 
-int* sort_array(int *vet, int size, int method){
+/**
+ * Method that receives a pointer to an array that will be sorted,
+ * his size and the constant of the method that will be used
+ * @param  array  Array to be sorted
+ * @param  size   Size of the array
+ * @param  method Sorting algorithm constant
+ * @return        Pointer to the sorted array
+ */
+int* sort_array(int *array, int size, int method){
 
     switch(method){
         case SELECTION:
             start = clock();
-            selection_sort(vet, size);
+            selection_sort(array, size);
             end = clock();
         break;
 
         case INSERTION:
             start = clock();
-            insertion_sort(vet, size);
+            insertion_sort(array, size);
             end = clock();
         break;
 
         case SHELL:
             start = clock();
-            shell_sort(vet, size);
+            shell_sort(array, size);
             end = clock();
         break;
 
         case QUICK:
             start = clock();
-            quick_sort(vet, 0, size);
+            quick_sort(array, 0, size);
             end = clock();
         break;
 
         case HEAP:
             start = clock();
-            heap_sort(vet, size);
+            heap_sort(array, size);
             end = clock();
         break;
 
         case MERGE:
             start = clock();
-            merge_sort(vet, size);
+            merge_sort(array, size);
             end = clock();
         break;
 
         case GPUQUICK:
             start = clock();
-            gpu_qsort(vet,size);
+            gpu_qsort(array,size);
             end = clock();
         break;
 
         case GPUMERGE:
             start = clock();
-            gpumerge_sort(vet,size);
+            gpumerge_sort(array,size);
             end = clock();
     }
     elapsed_time = (((double)(end-start))/CLOCKS_PER_SEC);
-    return vet;
+    return array;
 }
 
 double get_elapsed_time(){
